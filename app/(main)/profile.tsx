@@ -20,7 +20,7 @@ export default function ProfileScreen() {
       </SignedOut>
 
       <SignedIn>
-        {/* Box blanche avec avatar et email */}
+       
         <View style={styles.card}>
           <View style={styles.avatar}>
             <MaterialIcons name="person" size={40} color="#2ecc71" />

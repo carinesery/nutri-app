@@ -3,7 +3,6 @@ import { tokenCache } from '@clerk/clerk-expo/token-cache'
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native'
 import { Stack, Tabs } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
-// import 'react-native-reanimated'
 
 export const unstable_settings = {
     anchor: '(tabs)',

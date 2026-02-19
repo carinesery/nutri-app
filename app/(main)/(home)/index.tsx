@@ -1,4 +1,3 @@
-// Liste des repas enregistrés
 import { SignOutButton } from '../../components/sign-out-button';
 import { SignedIn, SignedOut, useSession, useUser } from '@clerk/clerk-expo';
 import { Link, router } from 'expo-router';
@@ -154,7 +153,7 @@ const styles = StyleSheet.create({
   },
 
   primaryButton: {
-    backgroundColor: 'green',
+    backgroundColor: '#2ecc71',
     paddingVertical: 14,
     borderRadius: 12,
     alignItems: 'center',
@@ -169,14 +168,14 @@ const styles = StyleSheet.create({
 
   secondaryButton: {
     borderWidth: 1,
-    borderColor: 'green',
+    borderColor: '#2ecc71',
     paddingVertical: 14,
     borderRadius: 12,
     alignItems: 'center',
   },
 
   secondaryButtonText: {
-    color: 'lightgreen',
+    color: '#2ecc71',
     fontWeight: 'bold',
     fontSize: 16,
   },
@@ -247,7 +246,7 @@ const styles = StyleSheet.create({
   mealType: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: 'green',
+    color: '#2ecc71',
   },
 
   mealInfo: {
@@ -281,7 +280,7 @@ const styles = StyleSheet.create({
     width: 65,
     height: 65,
     borderRadius: 32,
-    backgroundColor: 'green',
+    backgroundColor: '#2ecc71',
     justifyContent: 'center',
     alignItems: 'center',
     shadowColor: '#000',

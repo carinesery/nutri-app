@@ -12,7 +12,16 @@ export default function AddLayout() {
 
   return (
     <AddContext.Provider value={{ selectedFoods, setSelectedFoods }}>
-      <Stack screenOptions={{ headerShown: true }}>
+      <Stack screenOptions={{
+        headerShown: true, 
+        headerStyle: {
+          backgroundColor: '#2ecc71',
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+      }}>
         <Stack.Screen name="index" options={{ title: "Nouveau repas" }} />
         <Stack.Screen name="camera" options={{ title: "Scan / photo" }} />
       </Stack>

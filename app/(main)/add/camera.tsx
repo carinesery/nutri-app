@@ -12,7 +12,7 @@ import {
   CameraType,
 } from "expo-camera";
 import { useEffect, useState } from "react";
-// import { useNavigationContext } from "expo-router";
+
 import { MaterialIcons } from "@expo/vector-icons";
 import { useRef } from "react";
 import { useContext } from "react";
@@ -24,7 +24,7 @@ export default function CameraScreen() {
   const [facing, setFacing] = useState<CameraType>("back");
   const [scanned, setScanned] = useState(false);
   const hasScanned = useRef(false);
-  // const { selectedFoods, setSelectedFoods } = useNavigationContext();
+  
   const ctx = useContext(AddContext);
   if (!ctx) throw new Error("AddContext not found");
 

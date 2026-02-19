@@ -66,7 +66,7 @@ export default function Page() {
               style={styles.mealCard}
               onPress={() =>
                 router.push({
-                  pathname: '/(main)/home/detail',
+                  pathname: '/[id]',
                   params: { meal: JSON.stringify(meal) },
                 })
               }

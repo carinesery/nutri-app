@@ -1,7 +1,16 @@
 import { Tabs } from "expo-router";
+import { createContext, useState } from "react";
+
+export const MealsContext = createContext<{
+  meals: any[];
+  setMeals: React.Dispatch<React.SetStateAction<any[]>>;
+} | null>(null);
+
 
 export default function MainLayout() {
+  const [meals, setMeals] = useState<any[]>([]);
   return (
+    <MealsContext.Provider value={{ meals, setMeals }}>
     <Tabs>
 //     <Tabs.Screen
       name="(home)"
@@ -17,5 +26,6 @@ export default function MainLayout() {
       options={{ title: "Profil" }}
     />
     </Tabs>
+    </MealsContext.Provider>
   );
 }

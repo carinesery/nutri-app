@@ -1,10 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext, useCallback } from "react";
 import { View, Text, TextInput, FlatList, TouchableOpacity, ActivityIndicator, Button, StyleSheet, Image } from "react-native";
-import { router } from "expo-router";
-import { useLocalSearchParams, useFocusEffect } from "expo-router";
-import { useCallback } from "react";
-import { useContext } from "react";
+import { router, useLocalSearchParams, useFocusEffect } from "expo-router";
+
 import { AddContext } from "./_layout";
+import { MealsContext } from "../_layout";
 
 const MEAL_TYPES = ["Petit déjeuner", "Déjeuner", "Dîner", "Snack"];
 
@@ -45,6 +44,12 @@ export default function CreateMealScreen() {
       setLoading(false);
     }
   };
+
+  const mealsCtx = useContext(MealsContext);
+  if (!mealsCtx) throw new Error("MealsContext not found");
+
+  const { setMeals } = mealsCtx;
+
 
   // Debounce de la recherche
   useEffect(() => {
@@ -89,15 +94,16 @@ export default function CreateMealScreen() {
 
     const newMeal = {
       type: mealType,
-      foods: selectedFoods,
+      foods: selectedFoods.map(f => ({
+        ...f,
+        calories: f.nutriments?.["energy-kcal_100g"] ?? 0, // Champ normalisé
+      })),
       date: new Date().toISOString(),
     };
 
-    // Naviguer vers l'écran "Mes repas" en passant le repas en paramètre
-    router.push({
-      pathname: "/",
-      params: { meal: JSON.stringify(newMeal) },
-    });
+    setMeals((prev) => [...prev, newMeal]);
+
+    router.replace("/(main)/(home)");
 
     // Réinitialiser la sélection
     setSelectedFoods([]);

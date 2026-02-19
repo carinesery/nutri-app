@@ -36,29 +36,44 @@ export default function Page() {
   // Calcul des calories totales
   const getTotalCalories = (meal: Meal) =>
     meal.foods.reduce((sum, food) => sum + (food.calories || 0), 0);
+
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Bienvenue ! Retrouvez ici la liste de vos repas.</Text>
 
+      {/* UTILISATEUR NON CONNECTÉ */}
       <SignedOut>
-        <Link href="/(auth)/login">
-          <Text style={styles.link}>Se connecter</Text>
-        </Link>
-        <Link href="/(auth)/signup">
-          <Text style={styles.link}>S'inscrire</Text>
-        </Link>
+        <View style={styles.authCard}>
+          <Text style={styles.authTitle}>
+            Connectez-vous pour accéder à vos repas
+          </Text>
+
+          <Link href="/(auth)/login" asChild>
+            <TouchableOpacity style={styles.primaryButton}>
+              <Text style={styles.primaryButtonText}>Se connecter</Text>
+            </TouchableOpacity>
+          </Link>
+
+          <Link href="/(auth)/signup" asChild>
+            <TouchableOpacity style={styles.secondaryButton}>
+              <Text style={styles.secondaryButtonText}>Créer un compte</Text>
+            </TouchableOpacity>
+          </Link>
+        </View>
       </SignedOut>
 
+      {/* UTILISATEUR CONNECTÉ */}
       <SignedIn>
-        <View style={styles.userHeader}>
-          <Text style={styles.userEmail}>Hello {user?.emailAddresses[0].emailAddress}</Text>
-          <SignOutButton />
-        </View>
 
-        <Text style={styles.title}>Mes repas :</Text>
+        <Text style={styles.title}>Liste de mes repas</Text>
 
         <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>
-          {meals.length === 0 && <Text style={styles.noMeal}>Aucun repas enregistré pour l'instant.</Text>}
+          {meals.length === 0 && (
+            <View style={styles.emptyState}>
+              <Text style={styles.noMeal}>
+                Aucun repas enregistré pour l'instant 🍽
+              </Text>
+            </View>
+          )}
 
           {meals.map((meal, index) => (
             <TouchableOpacity
@@ -80,8 +95,12 @@ export default function Page() {
 
               {meal.foods.map((food: Food) => (
                 <View key={food.code} style={styles.foodItem}>
-                  {food.image_url && <Image source={{ uri: food.image_url }} style={styles.foodImage} />}
-                  <Text style={styles.foodName}>{food.product_name_fr || food.product_name}</Text>
+                  {food.image_url && (
+                    <Image source={{ uri: food.image_url }} style={styles.foodImage} />
+                  )}
+                  <Text style={styles.foodName}>
+                    {food.product_name_fr || food.product_name}
+                  </Text>
                 </View>
               ))}
             </TouchableOpacity>
@@ -97,51 +116,184 @@ export default function Page() {
       </SignedIn>
     </View>
   );
+
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20, backgroundColor: '#f9f9f9' },
-  header: { fontSize: 18, fontWeight: 'bold', marginBottom: 16, color: '#333' },
-  link: { fontSize: 16, color: '#007bff', marginBottom: 8 },
-  userHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 },
-  userEmail: { fontSize: 16, fontWeight: 'bold' },
-  title: { fontSize: 20, fontWeight: 'bold', color: '#007bff', marginBottom: 12 },
-  noMeal: { fontStyle: 'italic', color: '#777', textAlign: 'center', marginTop: 8 },
+  container: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: '#f4f6f9',
+  },
+
+  header: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    color: '#222',
+  },
+
+  /* AUTH CARD */
+
+  authCard: {
+    backgroundColor: '#fff',
+    padding: 24,
+    borderRadius: 16,
+    shadowColor: '#000',
+    shadowOpacity: 0.08,
+    shadowOffset: { width: 0, height: 4 },
+    shadowRadius: 8,
+    elevation: 4,
+  },
+
+  authTitle: {
+    fontSize: 16,
+    marginBottom: 20,
+    textAlign: 'center',
+    color: '#555',
+  },
+
+  primaryButton: {
+    backgroundColor: 'green',
+    paddingVertical: 14,
+    borderRadius: 12,
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+
+  primaryButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+
+  secondaryButton: {
+    borderWidth: 1,
+    borderColor: 'green',
+    paddingVertical: 14,
+    borderRadius: 12,
+    alignItems: 'center',
+  },
+
+  secondaryButtonText: {
+    color: 'lightgreen',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+
+  /* USER CARD */
+
+  userCard: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    padding: 16,
+    borderRadius: 16,
+    marginBottom: 20,
+    shadowColor: '#000',
+    shadowOpacity: 0.08,
+    shadowOffset: { width: 0, height: 4 },
+    shadowRadius: 8,
+    elevation: 4,
+  },
+
+  userGreeting: {
+    fontSize: 14,
+    color: '#777',
+  },
+
+  userEmail: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#222',
+  },
+
+  title: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 12,
+    color: 'black',
+  },
+
+  emptyState: {
+    backgroundColor: '#fff',
+    padding: 20,
+    borderRadius: 16,
+    alignItems: 'center',
+  },
+
+  noMeal: {
+    fontStyle: 'italic',
+    color: '#777',
+  },
 
   mealCard: {
     backgroundColor: '#fff',
-    borderRadius: 12,
-    padding: 12,
+    borderRadius: 16,
+    padding: 16,
     marginBottom: 16,
     shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 5,
-    elevation: 3,
+    shadowOpacity: 0.08,
+    shadowOffset: { width: 0, height: 4 },
+    shadowRadius: 8,
+    elevation: 4,
   },
-  mealHeader: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 8 },
-  mealType: { fontSize: 16, fontWeight: 'bold', color: '#007bff' },
-  mealInfo: { fontSize: 12, color: '#555' },
 
-  foodItem: { flexDirection: 'row', alignItems: 'center', marginBottom: 6 },
-  foodImage: { width: 40, height: 40, borderRadius: 6, marginRight: 10 },
-  foodName: { fontSize: 14, color: '#333', flexShrink: 1 },
+  mealHeader: {
+    marginBottom: 10,
+  },
+
+  mealType: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: 'green',
+  },
+
+  mealInfo: {
+    fontSize: 12,
+    color: '#666',
+  },
+
+  foodItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 6,
+  },
+
+  foodImage: {
+    width: 40,
+    height: 40,
+    borderRadius: 8,
+    marginRight: 10,
+  },
+
+  foodName: {
+    fontSize: 14,
+    color: '#333',
+    flexShrink: 1,
+  },
 
   addButton: {
     position: 'absolute',
     bottom: 30,
     right: 30,
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    backgroundColor: '#007bff',
+    width: 65,
+    height: 65,
+    borderRadius: 32,
+    backgroundColor: 'green',
     justifyContent: 'center',
     alignItems: 'center',
     shadowColor: '#000',
     shadowOpacity: 0.3,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 5,
-    elevation: 5,
+    shadowOffset: { width: 0, height: 3 },
+    shadowRadius: 6,
+    elevation: 6,
   },
-  addButtonText: { color: '#fff', fontSize: 32, lineHeight: 32 },
+
+  addButtonText: {
+    color: '#fff',
+    fontSize: 32,
+    lineHeight: 32,
+  },
 });

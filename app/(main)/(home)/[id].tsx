@@ -1,6 +1,6 @@
 // app/(main)/home/detail/[id].tsx
 import { View, Text, ScrollView, Image, StyleSheet, Button, Alert } from "react-native";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { useLocalSearchParams, router } from "expo-router";
 import { MealsContext } from "../_layout";
 
@@ -27,11 +27,23 @@ export default function MealDetailPage() {
   };
 
   const { meal: mealParam } = useLocalSearchParams();
-  if (!mealParam) throw new Error("Aucun repas fourni !");
+
+  useEffect(() => {
+    if (!mealParam) {
+      router.replace("/(main)/(home)");
+    }
+  }, [mealParam]);
+
+  if (!mealParam) {
+    return null; // On ne rend rien pendant la redirection
+  }
+
   const meal: Meal = JSON.parse(mealParam as string);
 
   const mealsCtx = useContext(MealsContext);
-  if (!mealsCtx) throw new Error("MealsContext introuvable !");
+  if (!mealsCtx) {
+    throw new Error("MealsContext introuvable !")
+  };
   const { meals, setMeals } = mealsCtx;
 
   // Calculs totaux

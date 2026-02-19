@@ -190,7 +190,7 @@ const styles = StyleSheet.create({
   label: { fontSize: 16, fontWeight: "bold", marginBottom: 8 },
   mealTypeContainer: { flexDirection: "row", flexWrap: "wrap", marginBottom: 16 },
   mealTypeButton: { padding: 8, borderWidth: 1, borderColor: "#ccc", borderRadius: 8, marginRight: 8, marginBottom: 8 },
-  mealTypeButtonSelected: { backgroundColor: "#007bff", borderColor: "#007bff" },
+  mealTypeButtonSelected: { backgroundColor: "green", borderColor: "green" },
   mealTypeText: { color: "#000" },
   mealTypeTextSelected: { color: "#fff" },
   input: { height: 50, borderWidth: 1, borderColor: "#ccc", paddingHorizontal: 12, borderRadius: 8, marginBottom: 16 },

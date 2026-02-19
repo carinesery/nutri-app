@@ -1,6 +1,7 @@
 import { Tabs } from "expo-router";
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 import { Ionicons } from '@expo/vector-icons';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const MealsContext = createContext<{
   meals: any[];
@@ -10,6 +11,7 @@ export const MealsContext = createContext<{
 
 export default function MainLayout() {
   const [meals, setMeals] = useState<any[]>([]);
+
   return (
     <MealsContext.Provider value={{ meals, setMeals }}>
       <Tabs

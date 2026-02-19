@@ -17,7 +17,5 @@ export default function RootLayout() {
             </Stack>
             <StatusBar style="auto" />
         </ClerkProvider>
-
     )
 }
-

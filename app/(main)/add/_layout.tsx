@@ -1,16 +1,3 @@
-// import { Stack } from "expo-router";
-
-// export default function AddLayout() {
-//   const [selectedFoods, setSelectedFoods] = useState<any[]>([]);
-
-//   return <Stack screenOptions={{ headerShown: true }}>
-//     <Stack.Screen name="index"
-//       options={{ title: "Nouveau repas" }} />
-//        <Stack.Screen name="camera"
-//       options={{ title: "Scan / photo" }} />
-//   </Stack>;
-// }
-
 import { Stack, Slot } from "expo-router";
 import { useState, createContext } from "react";
 
